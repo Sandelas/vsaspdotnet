@@ -25,18 +25,22 @@ jobs:
     # Runs a single command using the runners shell
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      
     - name: Restore packages
       run: nuget restore aspnetmvcapp.sln
-      
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-      
     - name: Build with MSBuild
       run:
-        msbuild  aspnetmvcapp.sln /p:Configuration=Release
+     #   msbuild  aspnetmvcapp.sln /p:Configuration=Release 
+         msbuild  aspnetmvcapp.sln /p:Configuration=Release /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=aspnetmvcapp
+# publish to Azure App Service
+    - name: 'Run Azure webapp deploy action using publish profile credentials'
+      uses: azure/webapps-deploy@v1
+      with: 
+        app-name: VSHelloWorld # Replace with your app name
+        publish-profile: ${{ secrets.publish_profile }} # Define secret variable in repository settings as per action documentation
+        package: './aspnetmvcapp' 
 
-#   dotnet pack --no-build -c Release --output "${{ github.workspace }}/package"
     - name: 'Upload Package'
       uses: actions/upload-artifact@v1
       with:
