@@ -32,7 +32,7 @@ jobs:
     - name: Build with MSBuild
       run:
      #   msbuild  aspnetmvcapp.sln /p:Configuration=Release 
-         msbuild  aspnetmvcapp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile=vsaspdotnet.PublishSettings.pubxml
+         msbuild  aspnetmvcapp.sln /p:Configuration=Release /p:DeployOnBuild=true /p:PublishProfile="vsaspdotnet/aspnetmvcapp/Properties/PublishProfiles/vsaspdotnet.PublishSettings"
 # publish to Azure App Service
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v1
